@@ -6,11 +6,11 @@
     <version>1.0.001</version>
 
     <groupId>com.ycomplex.imageserver</groupId>
-    <artifactId>imageserver</artifactId>
+    <artifactId>cloud-file-server</artifactId>
 
     <properties>
-        <app.id>ycomplex-image-server</app.id>
-        <app.version>101</app.version>
+        <app.id>[Enter your appengine app id here]</app.id>
+        <app.version>1</app.version>
         <appengine.version>1.9.24</appengine.version>
         <gcloud.plugin.version>0.9.58.v20150505</gcloud.plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -105,6 +105,14 @@
                             <filtering>true</filtering>
                             <targetPath>WEB-INF</targetPath>
                         </resource>
+                        <resource>
+                            <directory>${basedir}</directory>
+                            <includes>
+                                <include>config.json</include>
+                            </includes>
+                            <filtering>true</filtering>
+                            <targetPath>WEB-INF</targetPath>
+                        </resource>
                     </webResources>
                 </configuration>
             </plugin>
@@ -116,14 +124,6 @@
                 <configuration>
                     <enableJarClasses>false</enableJarClasses>
                     <version>${app.version}</version>
-                    <!-- Comment in the below snippet to bind to all IPs instead of just localhost -->
-                    <!-- address>0.0.0.0</address>
-                    <port>8080</port -->
-                    <!-- Comment in the below snippet to enable local debugging with a remote debugger
-                         like those included with Eclipse or IntelliJ -->
-                    <!-- jvmFlags>
-                      <jvmFlag>-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n</jvmFlag>
-                    </jvmFlags -->
                 </configuration>
             </plugin>
             <plugin>

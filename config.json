@@ -2,9 +2,9 @@
 	"configs": [
 	    {
 	        // Default configuration
-	        "bucket": "ycomplex-image-server.appspot.com",
-            "serveDirect": true,
+	        "bucket": "${app.id}.appspot.com",
             "returnCloudPath": false,
+            "auth": "none",
 	        "original": {
 	            "type": "image",
 	            "maxSize": 10000000,
@@ -66,6 +66,5 @@
                 }            
 	        ]
 	    }
-	],
-	"fileServingServer": "http://imageserver.loctoc.com"
+	]
 }

@@ -3,10 +3,10 @@ package com.ycomplex.imageserver.config;
 public class Config {
 	public String name;
 	public String bucket;
-	public Boolean serveDirect;
-	public Boolean returnCloudPath;
 	public Original original;
 	public TransformConfig[] transforms;
+	public String auth;
+	public String authSecret;
 	
 	public static class Original {
 		public String type; // Should be 'pdf' or 'image' or 'all'

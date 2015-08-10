@@ -1,6 +1,5 @@
 package com.ycomplex.imageserver.dto;
 
-
 public class UploadUrlResponse extends ApiResponse {
 	public String url;
 	public Long maxSize;

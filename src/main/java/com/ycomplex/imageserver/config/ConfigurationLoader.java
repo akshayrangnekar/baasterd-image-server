@@ -31,7 +31,7 @@ public class ConfigurationLoader {
 	
 	private void setConfigs(ConfigurationFile inConfigFile) {
 		this.configFile = inConfigFile;
-		this.configs = inConfigFile.configs;
+		this.configs = this.configFile.configs;
 		this.configMap = new HashMap<>();
 		
 		for (int i = 0; i < configs.length; i++) {
@@ -45,8 +45,7 @@ public class ConfigurationLoader {
 	
 	private Config validateConfig(Config config) {
 		if (config.bucket != null &&
-				config.serveDirect != null &&
-				config.returnCloudPath != null &&
+				config.auth != null &&
 				config.original != null &&
 				config.original.type != null && 
 				config.original.preserve != null && 
@@ -68,10 +67,6 @@ public class ConfigurationLoader {
 	public Config getConfig(String configName) {
 		return applyDefaultConfig(this.configMap.get(configName));
 	}
-	
-	public String getServer() {
-		return configFile.fileServingServer;
-	}
 
 	private Config applyDefaultConfig(Config config) {
 		Config def = getDefaultConfig();
@@ -79,8 +74,7 @@ public class ConfigurationLoader {
 		if (def != null && config != null) {
 			if (config.bucket == null) config.bucket = def.bucket;
 			if (config.transforms == null) config.transforms = def.transforms;
-			if (config.serveDirect == null) config.serveDirect = def.serveDirect;
-			if (config.returnCloudPath == null) config.returnCloudPath = def.returnCloudPath;
+			if (config.auth == null) config.auth = def.auth;
 			if (config.original == null) config.original = def.original;
 			else {
 				if (config.original.maxSize == null) config.original.maxSize = def.original.maxSize;

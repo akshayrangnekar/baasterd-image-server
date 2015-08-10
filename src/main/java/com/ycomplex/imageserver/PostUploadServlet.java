@@ -21,11 +21,9 @@ import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesService.OutputEncoding;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.OutputSettings;
-import com.google.appengine.api.images.ServingUrlOptions;
 import com.google.appengine.api.images.Transform;
 import com.ycomplex.imageserver.config.Config;
 import com.ycomplex.imageserver.config.Config.TransformConfig;
-import com.ycomplex.imageserver.config.ConfigurationLoader;
 import com.ycomplex.imageserver.dto.ApiResponse;
 import com.ycomplex.imageserver.dto.ErrorResponse;
 import com.ycomplex.imageserver.dto.UploadResponse;
@@ -70,9 +68,14 @@ public class PostUploadServlet extends ApiServlet {
     	
     	try {
 	    	for (UploadedFile upFile : uploadedFiles) {
+	    		boolean deleteOriginal = true;
 	    		if (isAllowed(conf, upFile)) {
 	    			processUploadedFile(conf, uploadResponse, upFile);
+	    		} else {
+	    			deleteOriginal = true;
 	    		}
+	    		if (!conf.original.preserve) deleteOriginal = true;
+	    		if (deleteOriginal) deleteOriginalFile(conf, upFile);
 	    	}
 	    	return uploadResponse;
     	}
@@ -97,13 +100,18 @@ public class PostUploadServlet extends ApiServlet {
     	}
 	}
 
+	protected void deleteOriginalFile(Config conf, UploadedFile upFile) throws IOException {
+		String gsFileName = upFile.fileInfo.getGsObjectName().substring(conf.bucket.length() + 5);
+		fs.deleteFileFromCloudStorage(conf.bucket, gsFileName);
+	}
+
 	protected void processUploadedFile(Config conf,
 			UploadResponse uploadResponse, UploadedFile upFile)
 			throws TransformationFailureException {
-		String servingUrl = getServingUrl(upFile, conf);
-		String cloudLocation = conf.returnCloudPath ? upFile.fileInfo.getGsObjectName() : null;
 		ServedFile uploadedFile;
 		if (conf.original.preserve) {
+			String servingUrl = getServingUrl(upFile, conf);
+			String cloudLocation = upFile.fileInfo.getGsObjectName();
 			uploadedFile = uploadResponse.addUploadedFile(servingUrl, cloudLocation, upFile.fileInfo.getContentType());
 		} else {
 			uploadedFile = uploadResponse.addBlankFile();
@@ -185,23 +193,9 @@ public class PostUploadServlet extends ApiServlet {
 	}
 
 	public String getServingUrl(UploadedFile upFile, Config conf) {
-		String servingUrl;
-		if (conf.serveDirect) {
-			String gsObjectName = upFile.fileInfo.getGsObjectName();
-			String fileName = gsObjectName.substring(("/gs/" + conf.bucket).length());
-			servingUrl = "http://storage.googleapis.com/" + conf.bucket + fileName;
-		} else {
-			if (isImage(upFile)) {
-				log.fine("Is Image");
-				servingUrl = imagesService.getServingUrl(ServingUrlOptions.Builder.withBlobKey(upFile.blobKey));
-				log.fine("Got serving url");
-			} else {
-				log.fine("Is Not Image");
-				ConfigurationLoader confLoader = ConfigurationLoader.getConfigurationLoader();
-				servingUrl = confLoader.getServer() + "/file" + upFile.fileInfo.getGsObjectName();
-				log.fine("Built serving url");
-			}
-		}
+		String gsObjectName = upFile.fileInfo.getGsObjectName();
+		String fileName = gsObjectName.substring(("/gs/" + conf.bucket).length());
+		String servingUrl = "http://storage.googleapis.com/" + conf.bucket + fileName;
 		return servingUrl;
 	}
 	

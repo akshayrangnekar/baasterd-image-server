@@ -60,5 +60,10 @@ public class FileService {
 		outputChannel.write(ByteBuffer.wrap(bytes));
 		outputChannel.close();
 	}
+	
+	public boolean deleteFileFromCloudStorage(String bucketName, String filename) throws IOException {
+		GcsFilename gcsFilename = new GcsFilename(bucketName, filename);
+		return GcsServiceFactory.createGcsService().delete(gcsFilename);
+	}
 
 }
