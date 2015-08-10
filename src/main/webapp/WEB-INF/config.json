@@ -1,0 +1,71 @@
+{
+	"configs": [
+	    {
+	        // Default configuration
+	        "bucket": "ycomplex-image-server.appspot.com",
+            "serveDirect": true,
+            "returnCloudPath": false,
+	        "original": {
+	            "type": "image",
+	            "maxSize": 10000000,
+	            "preserve": true
+	        },
+	        "transforms": [ 
+	            {
+                    "name": "small",
+	                "type": "max-dim",
+	                "width": 400,
+	                "height": 200,
+                    "encoding": "jpeg",
+                    "quality": 80
+	            }            
+	        ]
+	    },
+	    {
+	        "name": "test",
+	        "original": {
+	            "type": "image",
+	            "maxSize": 20000000,
+	            "preserve": false
+	        },
+	        "transforms": [ 
+	            {
+                    "name": "thumb",
+	                "type": "max-dim",
+	                "width": 500,
+	                "height": 400,
+                    "encoding": "png"
+	            },
+	            {
+                    "name": "maxw1",
+	                "type": "max-width",
+	                "width": 200,
+                    "encoding": "jpeg",
+                    "quality": 99
+	            },
+                {
+                    "name": "maxw2",
+                    "type": "max-width",
+                    "width": 200,
+                    "encoding": "jpeg",
+                    "quality": 50
+                },
+                {
+                    "name": "maxh",
+                    "type": "max-height",
+                    "height": 400,
+                    "encoding": "jpeg",
+                    "quality": 99
+                },
+                {
+                    "name": "scale-crop",
+                    "type": "scale-crop",
+                    "width": 400,
+                    "height": 400,
+                    "encoding": "png"
+                }            
+	        ]
+	    }
+	],
+	"fileServingServer": "http://imageserver.loctoc.com"
+}

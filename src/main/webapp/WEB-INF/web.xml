@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<servlet>
+		<servlet-name>UploadUrlRequestServlet</servlet-name>
+		<servlet-class>com.ycomplex.imageserver.UploadUrlRequestServlet</servlet-class>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>ShowConfigurationServlet</servlet-name>
+		<servlet-class>com.ycomplex.imageserver.ShowConfigurationServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>PostUploadServlet</servlet-name>
+		<servlet-class>com.ycomplex.imageserver.PostUploadServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>FileServlet</servlet-name>
+		<servlet-class>com.ycomplex.imageserver.FileServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ShowConfigurationServlet</servlet-name>
+		<url-pattern>/showConfig/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>PostUploadServlet</servlet-name>
+		<url-pattern>/postUpload/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UploadUrlRequestServlet</servlet-name>
+		<url-pattern>/uploadUrl/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>FileServlet</servlet-name>
+		<url-pattern>/file/*</url-pattern>
+	</servlet-mapping>
+</web-app>
