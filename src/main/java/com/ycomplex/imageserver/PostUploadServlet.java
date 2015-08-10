@@ -71,10 +71,8 @@ public class PostUploadServlet extends ApiServlet {
 	    		boolean deleteOriginal = true;
 	    		if (isAllowed(conf, upFile)) {
 	    			processUploadedFile(conf, uploadResponse, upFile);
-	    		} else {
-	    			deleteOriginal = true;
-	    		}
-	    		if (!conf.original.preserve) deleteOriginal = true;
+		    		if (conf.original.preserve) deleteOriginal = false;
+	    		} 
 	    		if (deleteOriginal) deleteOriginalFile(conf, upFile);
 	    	}
 	    	return uploadResponse;
