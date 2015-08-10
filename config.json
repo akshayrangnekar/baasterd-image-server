@@ -4,7 +4,8 @@
 	        // Default configuration
 	        "bucket": "${app.id}.appspot.com",
             "returnCloudPath": false,
-            "auth": "none",
+            "auth": "secret",
+            "authSecret": "PUT_A_LONG_STRING_HERE",
 	        "original": {
 	            "type": "image",
 	            "maxSize": 10000000,

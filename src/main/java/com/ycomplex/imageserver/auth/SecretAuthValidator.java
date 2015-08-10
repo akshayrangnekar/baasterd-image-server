@@ -8,7 +8,7 @@ public class SecretAuthValidator extends AuthValidator {
 
 	@Override
 	public String validateRequest(HttpServletRequest request, Config conf) {
-		String token = request.getParameter("token");
+		String token = request.getParameter("secret");
 		if (token == null || !token.equals(conf.authSecret)) {
 			return null;
 		}

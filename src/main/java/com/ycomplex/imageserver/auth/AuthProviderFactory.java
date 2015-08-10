@@ -5,7 +5,7 @@ public class AuthProviderFactory {
 		if (type == null || type.equals("none")) {
 			return new PublicAuthValidator();
 		}
-		else if (type == "secret") return new SecretAuthValidator();
+		else if (type.equals("secret")) return new SecretAuthValidator();
 		
 		return null;
 	}

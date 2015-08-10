@@ -15,6 +15,7 @@ import com.ycomplex.imageserver.auth.AuthProviderFactory;
 import com.ycomplex.imageserver.auth.AuthValidator;
 import com.ycomplex.imageserver.config.Config;
 import com.ycomplex.imageserver.dto.ApiResponse;
+import com.ycomplex.imageserver.dto.ErrorResponse;
 import com.ycomplex.imageserver.dto.UploadUrlResponse;
 
 /**
@@ -28,10 +29,10 @@ public class UploadUrlRequestServlet extends ApiServlet {
 	protected ApiResponse handleApiRequest(Config conf, HttpServletRequest req,
 			HttpServletResponse resp) throws IOException {
 		AuthValidator authValidator = AuthProviderFactory.getValidator(conf.auth);
-		if (authValidator == null) throw new IOException("Invalid authentication config.");
+		if (authValidator == null) return new ErrorResponse("Invalid authentication config.");
 
 		String authToken = authValidator.validateRequest(req, conf);
-		if (authToken == null) throw new IOException("Invalid authentication.");
+		if (authToken == null) return new ErrorResponse("Invalid authentication.");
 
 		String postUploadParams = "failTime=" + (new Date()).getTime(); // Avoid caching bug on dev server
 		if (authToken.length() > 0) postUploadParams = postUploadParams + "&authToken=" + authToken;
