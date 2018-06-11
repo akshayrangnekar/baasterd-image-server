@@ -9,7 +9,7 @@
     <artifactId>cloud-file-server</artifactId>
 
     <properties>
-        <app.id>[Enter your appengine app id here]</app.id>
+        <app.id>test-image-server</app.id>
         <app.version>1</app.version>
         <appengine.version>1.9.24</appengine.version>
         <gcloud.plugin.version>0.9.58.v20150505</gcloud.plugin.version>

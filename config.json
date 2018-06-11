@@ -5,7 +5,7 @@
 	        "bucket": "${app.id}.appspot.com",
             "returnCloudPath": false,
             "auth": "secret",
-            "authSecret": "PUT_A_LONG_STRING_HERE",
+            "authSecret": "MYSECRETSECRET",
 	        "original": {
 	            "type": "image",
 	            "maxSize": 10000000,
